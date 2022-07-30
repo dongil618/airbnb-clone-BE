@@ -1,5 +1,6 @@
 package com.hanghae99.airbnbclonebe.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -7,6 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Wish {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +23,9 @@ public class Wish {
     @ManyToOne
     @JoinColumn(name = "ROOM_ID")
     private Room room;
+
+    public Wish(User user, Room room) {
+        this.user = user;
+        this.room = room;
+    }
 }
