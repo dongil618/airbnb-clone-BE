@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Room {
+public class Room extends TimeStamped{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -44,5 +44,8 @@ public class Room {
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
     private List<Image> imageList = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
+    private List<Wish> wishList = new ArrayList<>();
 
 }
