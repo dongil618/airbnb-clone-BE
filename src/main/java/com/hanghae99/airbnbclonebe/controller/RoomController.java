@@ -19,7 +19,7 @@ public class RoomController {
 
     private final RoomService roomService;
 
-   @GetMapping("/rooms")
+   /*@GetMapping("/rooms")
    public Slice<GetRoomsResponseDto> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam String category,
                                                Pageable pageable){
@@ -45,6 +45,6 @@ public class RoomController {
         Long userId = userDetails.getUser().getId();
 
         return roomService.getRoomsFilter(category, pageable, userId, parking, kitchen, aircon, wifi, washer, tv, minPrice, maxPrice);
-    }
+    }*/
 
 }

@@ -16,11 +16,11 @@ public class RoomService {
 
     private final RoomRepository roomRepository;
 
-    public Slice<GetRoomsResponseDto> getRooms(String category, Pageable pageable, Long userId) {
+    /*public Slice<GetRoomsResponseDto> getRooms(String category, Pageable pageable, Long userId) {
         return roomRepository.findAllByCategoryOrderByCreatedAt(category, pageable, userId);
     }
 
     public Slice<GetRoomsResponseDto> getRoomsFilter(String category, Pageable pageable, Long userId, boolean parking, boolean kitchen, boolean aircon, boolean wifi, boolean washer, boolean tv, int minPrice, int maxPrice) {
         return roomRepository.findAllByCategoryOrderByCreatedAtFilter(category, pageable, userId, parking, kitchen, aircon, wifi, washer, tv, minPrice, maxPrice);
-    }
+    }*/
 }

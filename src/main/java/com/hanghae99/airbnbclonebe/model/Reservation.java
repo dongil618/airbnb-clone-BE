@@ -33,12 +33,12 @@ public class Reservation extends TimeStamped{
     private User user;
 
     @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMddd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMdd")
     @Column(nullable = false)
     private LocalDate checkIn;
 
     @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMddd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMdd")
     @Column(nullable = false)
     private LocalDate checkOut;
 
