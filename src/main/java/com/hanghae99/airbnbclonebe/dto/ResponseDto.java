@@ -6,10 +6,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ResponseDto {
-    private boolean status;
+    private int status;
     private String message;
 
-    public ResponseDto(boolean status, String message) {
+    public ResponseDto(int status, String message) {
         this.status = status;
         this.message = message;
     }
