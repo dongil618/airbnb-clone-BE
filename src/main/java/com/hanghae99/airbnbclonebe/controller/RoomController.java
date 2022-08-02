@@ -19,15 +19,15 @@ public class RoomController {
 
     private final RoomService roomService;
 
-    @GetMapping("/rooms")
-    public Slice<GetRoomsResponseDto> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails,
+   /*@GetMapping("/rooms")
+   public Slice<GetRoomsResponseDto> getRooms(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                @RequestParam String category,
                                                Pageable pageable){
         // 로그인이 된 사람의 wish도 같이 보여줘야 하기 때문
         Long userId = userDetails.getUser().getId();
 
         return roomService.getRooms(category, pageable, userId);
-    }
+   }
 
     @GetMapping("/room")
     public Slice<GetRoomsResponseDto> getRoomsFilter(@AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -45,6 +45,6 @@ public class RoomController {
         Long userId = userDetails.getUser().getId();
 
         return roomService.getRoomsFilter(category, pageable, userId, parking, kitchen, aircon, wifi, washer, tv, minPrice, maxPrice);
-    }
+    }*/
 
 }
