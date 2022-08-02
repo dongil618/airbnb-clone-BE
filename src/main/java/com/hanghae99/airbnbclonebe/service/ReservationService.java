@@ -37,6 +37,8 @@ public class ReservationService {
         Room room=roomRepository.findRoomById(roomId).orElseThrow(()->new NullPointerException("해당 숙소가 존재하지 않습니다"));
         LocalDate checkIn=requestDto.getCheckIn();
         LocalDate checkOut=requestDto.getCheckOut();
+        System.out.println("체크인: "+requestDto.getCheckIn());
+        System.out.println("체크아웃: "+requestDto.getCheckOut());
 
         //예약이 가능한 날짜인지 확인
         boolean canReservate=checkDate(roomId,checkIn,checkOut);
@@ -54,7 +56,6 @@ public class ReservationService {
     public boolean checkDate(Long roomId,LocalDate checkIn,LocalDate checkOut){
         List<Reservation> existReservation=reservationRepository.findAllById(roomId);
         for(Reservation reservation:existReservation){
-            System.out.println(reservation.getCheckIn()+","+reservation.getCheckOut());
             if((checkIn.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut()))
                     ||(checkOut.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut())))
                 return false;
