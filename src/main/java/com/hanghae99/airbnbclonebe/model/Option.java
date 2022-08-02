@@ -23,4 +23,9 @@ public class Option {
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING) // 이 어노테이션이 없으면 숫자로 나옴
     private OptionEnum name;
+
+    public Option(Room room, OptionEnum name) {
+        this.room = room;
+        this.name = name;
+    }
 }
