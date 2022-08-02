@@ -2,6 +2,8 @@ package com.hanghae99.airbnbclonebe.controller;
 
 import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
+import com.hanghae99.airbnbclonebe.dto.ResponseDto;
+import com.hanghae99.airbnbclonebe.dto.ResponseMessageDto;
 import com.hanghae99.airbnbclonebe.repository.ReservationRepository;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import com.hanghae99.airbnbclonebe.repository.UserRepository;
@@ -22,13 +24,13 @@ public class ReservationController {
 
     //예약하기
     @PostMapping("/api/reservation")
-    public void createReservation(@RequestBody ReservationRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public ResponseDto createReservation(@RequestBody ReservationRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception{
+       if(userDetails!=null)
+       {
         String username=userDetails.getUser().getUsername();//로그인 정보를 확인하기 위한 username
-        //Optional<Room> room=roomRepository.findRoomById(requestDto.getRoomId());//request에 있는 룸아이디로 룸 팢기
         Long roomId=requestDto.getRoomId();
-        //예약생성->request정보(roomId,체크인,체크아웃,guestNum,totalPrice)+roomId(request에서 추출)+username(예약자id)
-       reservationService.createReservation(requestDto,roomId,username);
-        //return reservation;
+        return reservationService.createReservation(requestDto,roomId,username);}
 
+       return new ResponseDto(false,"로그인이 필요합니다");
     }
 }

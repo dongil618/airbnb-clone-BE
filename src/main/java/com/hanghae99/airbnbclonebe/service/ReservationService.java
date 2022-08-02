@@ -1,6 +1,8 @@
 package com.hanghae99.airbnbclonebe.service;
 
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
+import com.hanghae99.airbnbclonebe.dto.ResponseDto;
+import com.hanghae99.airbnbclonebe.dto.ResponseMessageDto;
 import com.hanghae99.airbnbclonebe.model.Reservation;
 import com.hanghae99.airbnbclonebe.model.Room;
 import com.hanghae99.airbnbclonebe.model.User;
@@ -26,7 +28,7 @@ public class ReservationService {
     //request(roomId,체크인,체크아웃,guestNum,totalPrice)
     // +룸아이디(request에서 추출)
     // +유저정보 받아서 예약 생성
-    public void createReservation(ReservationRequestDto requestDto, Long roomId, String username){
+    public ResponseDto createReservation(ReservationRequestDto requestDto, Long roomId, String username){
         //room이 유효한지는 컨트롤러에서 검사한 후 서비스로 넘겨주기
         //user도 유효한지는 컨트롤러에서 검사한 후 서비스로 넘겨주기
 
@@ -39,14 +41,12 @@ public class ReservationService {
         //예약이 가능한 날짜인지 확인
         boolean canReservate=checkDate(roomId,checkIn,checkOut);
         if(canReservate==false)
-            throw new NullPointerException("예약이 불가능한 날짜입니다.");
+            return new ResponseDto(false,"등록실패.");
         else
         {
-            System.out.println("예약성공!");
             Reservation reservation=new Reservation(requestDto,room,user);
-            reservation=reservationRepository.save(reservation);
-            //return reservation;
-
+            reservationRepository.save(reservation);
+            return new ResponseDto(true,"등록 성공");
         }
 
     }
@@ -54,12 +54,14 @@ public class ReservationService {
     public boolean checkDate(Long roomId,LocalDate checkIn,LocalDate checkOut){
         List<Reservation> existReservation=reservationRepository.findAllById(roomId);
         for(Reservation reservation:existReservation){
+            System.out.println(reservation.getCheckIn()+","+reservation.getCheckOut());
             if((checkIn.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut()))
                     ||(checkOut.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut())))
-            {
                 return false;
-            }
         }
+        if(checkIn.isAfter(checkOut))
+            return false;
+
         return true;
     }
 
