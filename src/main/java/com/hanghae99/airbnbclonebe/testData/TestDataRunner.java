@@ -49,7 +49,7 @@ public class TestDataRunner implements ApplicationRunner {
 
 
         createRoom(testUser1, testUser2, testUser3);
-        createWish(testUser1, testUser2, testUser3);
+        // createWish(testUser1, testUser2, testUser3);
         createImage();
         createOption();
 
@@ -137,6 +137,9 @@ public class TestDataRunner implements ApplicationRunner {
                 .orElseThrow(() -> new IllegalArgumentException("해당 숙소정보가 없습니다."));
 
         String imgUrl = getRandomString(20);
+//        Random random = new Random();
+//        String[] imgUrlList = {"apartment", "offistel", "house"};
+//        String imgUrl = imgUrlList[random.nextInt(3)];
 
         Image image = new Image((long)i, room, imgUrl);
 
