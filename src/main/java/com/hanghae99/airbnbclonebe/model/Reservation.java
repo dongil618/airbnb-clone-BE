@@ -1,18 +1,23 @@
 package com.hanghae99.airbnbclonebe.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class Reservation {
+public class Reservation extends TimeStamped{
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -27,11 +32,15 @@ public class Reservation {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMddd")
     @Column(nullable = false)
-    private LocalDateTime checkIn;
+    private LocalDate checkIn;
 
+    @JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMddd")
     @Column(nullable = false)
-    private LocalDateTime checkOut;
+    private LocalDate checkOut;
 
     @Column(nullable = false)
     private int guestNum;

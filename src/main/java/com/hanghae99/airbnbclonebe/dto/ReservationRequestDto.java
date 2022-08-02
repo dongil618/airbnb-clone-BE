@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //예약을 위해 필요한 정보
@@ -13,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor//(access = AccessLevel.PRIVATE)
 public class ReservationRequestDto {
     Long roomId;
-    LocalDateTime checkIn;
-    LocalDateTime checkOut;
+    LocalDate checkIn;
+    LocalDate checkOut;
     int guestNum;
     int totalPrice;
     //예약자 아이디는 파라미터로 받기

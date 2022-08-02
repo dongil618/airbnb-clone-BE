@@ -2,6 +2,7 @@ package com.hanghae99.airbnbclonebe.dto;
 
 import com.hanghae99.airbnbclonebe.model.Reservation;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ReservationResponseDto {
@@ -9,8 +10,8 @@ public class ReservationResponseDto {
     //Long userId;
     //예약자 아이디 필요? 노션에 DB에는 있고 api설계에는 없음
     //아 이거 걍 예약자 아이디 파라미터로 받아서 돌려주자
-    LocalDateTime checkIn;
-    LocalDateTime checkOut;
+    LocalDate checkIn;
+    LocalDate checkOut;
     int guestNum;
     int totalPrice;
     String location;
