@@ -3,6 +3,7 @@ package com.hanghae99.airbnbclonebe.service;
 
 import com.hanghae99.airbnbclonebe.dto.GetReservationsResponseDto;
 import com.hanghae99.airbnbclonebe.dto.GetRoomsResponseDto;
+import com.hanghae99.airbnbclonebe.dto.WishListResponseDto;
 import com.hanghae99.airbnbclonebe.repository.ReservationRepository;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class MyPageService {
     private final RoomRepository roomRepository;
     private final ReservationRepository reservationRepository;
 
-    public Slice<GetRoomsResponseDto> getWishList(Pageable pageable, Long userId) {
+    public Slice<WishListResponseDto> getWishList(Pageable pageable, Long userId) {
         return roomRepository.findAllByOrderByCreatedAt(pageable, userId);
     }
 

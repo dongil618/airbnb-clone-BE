@@ -1,6 +1,7 @@
 package com.hanghae99.airbnbclonebe.repository;
 
 import com.hanghae99.airbnbclonebe.dto.GetRoomsResponseDto;
+import com.hanghae99.airbnbclonebe.dto.WishListResponseDto;
 import com.hanghae99.airbnbclonebe.model.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
@@ -69,12 +70,13 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
     }
 
     @Override
-    public Slice<GetRoomsResponseDto> findAllByOrderByCreatedAt(Pageable pageable, Long userId) {
-        List<GetRoomsResponseDto> returnRoom = queryFactory.select(Projections.fields(
-                        GetRoomsResponseDto.class,
+    public Slice<WishListResponseDto> findAllByOrderByCreatedAt(Pageable pageable, Long userId) {
+        List<WishListResponseDto> returnRoom = queryFactory.select(Projections.fields(
+                        WishListResponseDto.class,
                         room.id.as("roomId"),
                         room.title,
                         room.price,
+                        room.user.username.as("hostname"),
                         room.location,
                         // imgUrl 1개만 가져오기  room.imageList.get(0) 오류남
                         ExpressionUtils.as(

@@ -3,6 +3,7 @@ package com.hanghae99.airbnbclonebe.controller;
 import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.GetReservationsResponseDto;
 import com.hanghae99.airbnbclonebe.dto.GetRoomsResponseDto;
+import com.hanghae99.airbnbclonebe.dto.WishListResponseDto;
 import com.hanghae99.airbnbclonebe.service.MyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
@@ -20,7 +21,7 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping("/wishlist")
-    public Slice<GetRoomsResponseDto> getWishList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+    public Slice<WishListResponseDto> getWishList(@AuthenticationPrincipal UserDetailsImpl userDetails,
                                                   Pageable pageable){
 
         Long userId = userDetails.getUser().getId();
