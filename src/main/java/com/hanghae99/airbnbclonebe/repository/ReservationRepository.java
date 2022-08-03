@@ -1,6 +1,7 @@
 package com.hanghae99.airbnbclonebe.repository;
 
 import com.hanghae99.airbnbclonebe.model.Reservation;
+import com.hanghae99.airbnbclonebe.model.Room;
 import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,8 +11,10 @@ import java.util.Optional;
 
 
 @Repository
+
 public interface ReservationRepository extends JpaRepository<Reservation,Long>, ReservationRepositoryCustom{
-    List<Reservation> findAllById(Long Id);
+    List<Reservation> findAllByRoom(Room room);
+
     //예약 정보들을 userId로 찾기
     //모든 예약을 roomId로 찾기
 
