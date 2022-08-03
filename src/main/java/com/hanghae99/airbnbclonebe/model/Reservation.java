@@ -33,15 +33,15 @@ public class Reservation extends TimeStamped{
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd")//shape = JsonFormat.Shape.STRING,
+    //@JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss",timezone = "Asia/Seoul")//shape = JsonFormat.Shape.STRING,
     @Column(nullable = false)
-    private LocalDate checkIn;
+    private LocalDateTime checkIn;
 
-    @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    //@JsonDeserialize(using= LocalDateDeserializer.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd'T'HH:mm:ss",timezone = "Asia/Seoul")//shape = JsonFormat.Shape.STRING,
     @Column(nullable = false)
-    private LocalDate checkOut;
+    private LocalDateTime checkOut;
 
     @Column(nullable = false)
     private int guestNum;

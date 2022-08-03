@@ -33,7 +33,6 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom{
                         reservation.guestNum,
                         reservation.totalPrice,
                         room.location,
-                        reservation.status,
                         reservation.isCancel,
                         reservation.isComplete,
                         // imgUrl 1개만 가져오기  room.imageList.get(0) 오류남

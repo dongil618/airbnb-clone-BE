@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor//(access = AccessLevel.PRIVATE)
 public class ReservationRequestDto {
     Long roomId;
-    LocalDate checkIn;
-    LocalDate checkOut;
+    LocalDateTime checkIn;
+    LocalDateTime checkOut;
     int guestNum;
     int totalPrice;
     //예약자 아이디는 파라미터로 받기

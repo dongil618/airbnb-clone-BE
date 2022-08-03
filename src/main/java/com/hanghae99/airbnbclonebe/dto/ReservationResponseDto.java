@@ -10,8 +10,8 @@ public class ReservationResponseDto {
     //Long userId;
     //예약자 아이디 필요? 노션에 DB에는 있고 api설계에는 없음
     //아 이거 걍 예약자 아이디 파라미터로 받아서 돌려주자
-    LocalDate checkIn;
-    LocalDate checkOut;
+    LocalDateTime checkIn;
+    LocalDateTime checkOut;
     int guestNum;
     int totalPrice;
     String location;
