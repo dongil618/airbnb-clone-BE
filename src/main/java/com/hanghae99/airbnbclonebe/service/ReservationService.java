@@ -10,6 +10,7 @@ import com.hanghae99.airbnbclonebe.repository.ReservationRepository;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import com.hanghae99.airbnbclonebe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,12 +44,12 @@ public class ReservationService {
         //예약이 가능한 날짜인지 확인
         boolean canReservate=checkDate(roomId,checkIn,checkOut);
         if(canReservate==false)
-            return new ResponseDto(500,"등록실패.");
+            return new ResponseDto(HttpStatus.BAD_REQUEST.value(),"등록실패.");
         else
         {
             Reservation reservation=new Reservation(requestDto,room,user);
             reservationRepository.save(reservation);
-            return new ResponseDto(200,"등록 성공");
+            return new ResponseDto(HttpStatus.OK.value(),"등록 성공");
         }
 
     }

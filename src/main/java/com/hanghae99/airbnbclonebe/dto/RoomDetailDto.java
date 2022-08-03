@@ -1,5 +1,6 @@
 package com.hanghae99.airbnbclonebe.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hanghae99.airbnbclonebe.model.Image;
 import com.hanghae99.airbnbclonebe.model.Option;
 import com.hanghae99.airbnbclonebe.model.Room;
@@ -14,18 +15,19 @@ import java.util.List;
 @Getter
 public class RoomDetailDto {
 
-    private List<Image> imageList=new ArrayList<>();
-    private List<Option> optionList=new ArrayList<>();//optionId를 받아야하나?
+    @JsonIgnore
+    private List<Image> imageList;
+    @JsonIgnore
+    private List<Option> optionList;//optionId를 받아야하나?
     private String title;
     private String hostname;//호스트
-    private String userId;//호스트도 유저. 유저id로 호스트 찾기?
     private int maxGuest;
     private int price;
     private String information;
     private String location;
     private String category;
 
-    public RoomDetailDto(Room room){
+    public RoomDetailDto(Room room,List<Image> image,List<Option> option){
         this.title=room.getTitle();
         this.maxGuest=room.getMaxGuest();
         this.price= room.getPrice();
@@ -33,8 +35,10 @@ public class RoomDetailDto {
         this.location=room.getLocation();
         this.category= room.getCategory();
         this.hostname=room.getUser().getUsername(); //room의 유저=호스트
-        this.imageList=room.getImageList();
-        this.optionList=room.getOptionList();
+        this.imageList=image;
+        this.optionList=option;
     }
+
+
 
 }

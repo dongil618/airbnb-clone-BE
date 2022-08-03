@@ -6,7 +6,9 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Date;
 import java.util.Optional;
@@ -22,7 +24,7 @@ public class JwtDecoder {
 
     public String decodeUsername(String token) {
         DecodedJWT decodedJWT = isValidToken(token)
-                .orElseThrow(() -> new IllegalArgumentException("유효한 토큰이 아닙니다."));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED,"유효한 토큰이 아닙니다"));
 
         Date expiredDate = decodedJWT
                 .getClaim(CLAIM_EXPIRED_DATE)
@@ -30,14 +32,12 @@ public class JwtDecoder {
 
         Date now = new Date();
         if (expiredDate.before(now)) {
-            throw new IllegalArgumentException("유효한 토큰이 아닙니다.");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"유효한 토큰이 아닙니다");
         }
 
-        String username = decodedJWT
+        return decodedJWT
                 .getClaim(CLAIM_USER_NAME)
                 .asString();
-
-        return username;
     }
 
     private Optional<DecodedJWT> isValidToken(String token) {
