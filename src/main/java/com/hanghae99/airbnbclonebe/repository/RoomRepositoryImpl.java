@@ -69,6 +69,44 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
     }
 
     @Override
+    public Slice<GetRoomsResponseDto> findAllByOrderByCreatedAt(Pageable pageable, Long userId) {
+        List<GetRoomsResponseDto> returnRoom = queryFactory.select(Projections.fields(
+                        GetRoomsResponseDto.class,
+                        room.id.as("roomId"),
+                        room.title,
+                        room.price,
+                        room.location,
+                        // imgUrl 1개만 가져오기  room.imageList.get(0) 오류남
+                        ExpressionUtils.as(
+                                JPAExpressions
+                                        .select(image.imgUrl)
+                                        .from(image)
+                                        .where(image.id.eq(
+                                                JPAExpressions
+                                                        .select(image.id.min())
+                                                        .from(image)
+                                                        .where(room.id.eq(image.room.id))
+                                        ))
+                                ,"imgUrl"
+                        ),
+                        // wish 여부
+                        new CaseBuilder()
+                                .when(wish.id.isNull())
+                                .then((ComparableExpression<Boolean>) Expressions.asBoolean(false))
+                                .otherwise(Expressions.asBoolean(true)).as("isWish")
+                ))
+                .from(room)
+                .join(wish)
+                .on(room.id.eq(wish.room.id), wish.user.id.eq(userId))
+                .orderBy(room.createdAt.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return new SliceImpl<>(returnRoom, pageable, returnRoom.iterator().hasNext());
+    }
+
+    @Override
     public Slice<GetRoomsResponseDto> findAllByCategoryOrderByCreatedAtFilter(String category,
                                                                               Pageable pageable,
                                                                               Long userId,
