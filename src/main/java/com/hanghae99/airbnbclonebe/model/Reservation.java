@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -49,10 +50,13 @@ public class Reservation extends TimeStamped{
     private int totalPrice;
 
     @Column(nullable = false)
-    private boolean isCancel;
+    private boolean status = true;
 
     @Column(nullable = false)
-    private boolean isComplete;
+    private boolean isCancel = false;
+
+    @Column(nullable = false)
+    private boolean isComplete = false;
 
     //예약생성을 위한 생성자
     public Reservation(ReservationRequestDto requestDto,Room room,User user)
