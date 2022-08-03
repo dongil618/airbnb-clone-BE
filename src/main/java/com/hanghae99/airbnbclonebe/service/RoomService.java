@@ -14,6 +14,7 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -40,9 +41,17 @@ public class RoomService {
         .orElseThrow(()->new IllegalArgumentException("숙소가 존재하지 않습니다"));
         //String hostname=room.getUser().getUsername();
         //roomId로 호스트(유저) 찾는걸 해야하나?
+        List<String> imgUrl = new ArrayList<>();
         List<Image> imageList=imageRepository.findAllByRoom(room);
+        for(Image image : imageList){
+            imgUrl.add(image.getImgUrl());
+        }
+
+        List<String> option = new ArrayList<>();
         List<Option> optionList=optionRepository.findAllByRoom(room);
-        RoomDetailDto roomDetailDto=new RoomDetailDto(room,imageList,optionList);
-        return roomDetailDto;
+        for(Option optionName : optionList){
+            option.add(String.valueOf(optionName.getName()));
+        }
+        return new RoomDetailDto(room,imgUrl,option);
     }
 }

@@ -3,6 +3,8 @@ package com.hanghae99.airbnbclonebe.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.*;
 
 
@@ -10,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Image {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

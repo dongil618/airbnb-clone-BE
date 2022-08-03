@@ -71,8 +71,7 @@ public class RoomController {
     public RoomDetailDto getRoomDetail(@PathVariable Long roomId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         //Long roomid= requestDto.getRoomid();
         System.out.println("룸아이디는"+roomId);
-        RoomDetailDto roomDetailDto=roomService.getRoomDetail(roomId);
-        return roomDetailDto;
+        return roomService.getRoomDetail(roomId);
     }
 
 

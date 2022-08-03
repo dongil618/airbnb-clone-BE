@@ -15,10 +15,8 @@ import java.util.List;
 @Getter
 public class RoomDetailDto {
 
-    @JsonIgnore
-    private List<Image> imageList;
-    @JsonIgnore
-    private List<Option> optionList;//optionId를 받아야하나?
+    private List<String> imgUrl;
+    private List<String> option;//optionId를 받아야하나?
     private String title;
     private String hostname;//호스트
     private int maxGuest;
@@ -27,7 +25,7 @@ public class RoomDetailDto {
     private String location;
     private String category;
 
-    public RoomDetailDto(Room room,List<Image> image,List<Option> option){
+    public RoomDetailDto(Room room, List<String> imgUrl, List<String> option){
         this.title=room.getTitle();
         this.maxGuest=room.getMaxGuest();
         this.price= room.getPrice();
@@ -35,10 +33,7 @@ public class RoomDetailDto {
         this.location=room.getLocation();
         this.category= room.getCategory();
         this.hostname=room.getUser().getUsername(); //room의 유저=호스트
-        this.imageList=image;
-        this.optionList=option;
+        this.imgUrl=imgUrl;
+        this.option=option;
     }
-
-
-
 }
