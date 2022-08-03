@@ -10,7 +10,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation,Long>{
+public interface ReservationRepository extends JpaRepository<Reservation,Long>, ReservationRepositoryCustom{
     List<Reservation> findAllById(Long Id);
     //예약 정보들을 userId로 찾기
     //모든 예약을 roomId로 찾기
