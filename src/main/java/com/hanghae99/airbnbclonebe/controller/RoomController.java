@@ -2,16 +2,14 @@ package com.hanghae99.airbnbclonebe.controller;
 
 import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.GetRoomsResponseDto;
-import com.hanghae99.airbnbclonebe.model.User;
+
+import com.hanghae99.airbnbclonebe.dto.RoomDetailDto;
 import com.hanghae99.airbnbclonebe.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -44,6 +42,7 @@ public class RoomController {
         }
     }
 
+
     @GetMapping("/rooms")
     public Slice<GetRoomsResponseDto> getRooms(@RequestParam(required = false, defaultValue = "all") String category,
                                                @RequestParam(required = false, defaultValue = "false") boolean parking,
@@ -67,5 +66,14 @@ public class RoomController {
             return roomService.getRooms(category, pageable, userId);
         }
     }
+
+    @GetMapping("/rooms/{roomId}")
+    public RoomDetailDto getRoomDetail(@PathVariable Long roomId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+        //Long roomid= requestDto.getRoomid();
+        System.out.println("룸아이디는"+roomId);
+        RoomDetailDto roomDetailDto=roomService.getRoomDetail(roomId);
+        return roomDetailDto;
+    }
+
 
 }

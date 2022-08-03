@@ -33,12 +33,12 @@ public class Reservation extends TimeStamped{
     private User user;
 
     @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMdd")
+    @JsonFormat(pattern = "yyyy-MM-dd")//shape = JsonFormat.Shape.STRING,
     @Column(nullable = false)
     private LocalDate checkIn;
 
     @JsonDeserialize(using= LocalDateDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyyMMdd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(nullable = false)
     private LocalDate checkOut;
 
@@ -47,9 +47,6 @@ public class Reservation extends TimeStamped{
 
     @Column(nullable = false)
     private int totalPrice;
-
-    @Column(nullable = false)
-    private boolean status;//예약 상태(가능=TRUE,불가능=FALSE)
 
     @Column(nullable = false)
     private boolean isCancel;
