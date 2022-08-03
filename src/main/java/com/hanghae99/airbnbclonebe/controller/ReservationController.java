@@ -4,6 +4,7 @@ import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
 import com.hanghae99.airbnbclonebe.dto.ResponseDto;
 import com.hanghae99.airbnbclonebe.dto.ResponseMessageDto;
+import com.hanghae99.airbnbclonebe.model.User;
 import com.hanghae99.airbnbclonebe.repository.ReservationRepository;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import com.hanghae99.airbnbclonebe.repository.UserRepository;
@@ -27,9 +28,9 @@ public class ReservationController {
     public ResponseDto createReservation(@RequestBody ReservationRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) throws Exception{
        if(userDetails!=null)
        {
-        String username=userDetails.getUser().getUsername();//로그인 정보를 확인하기 위한 username
+        User user=userDetails.getUser();//로그인 정보를 확인하기 위한 username
         Long roomId=requestDto.getRoomId();
-        return reservationService.createReservation(requestDto,roomId,username);}
+        return reservationService.createReservation(requestDto,roomId,user);}
 
        return new ResponseDto(false,"로그인이 필요합니다");
     }

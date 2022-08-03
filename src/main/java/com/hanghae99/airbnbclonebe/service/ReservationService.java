@@ -28,12 +28,12 @@ public class ReservationService {
     //request(roomId,체크인,체크아웃,guestNum,totalPrice)
     // +룸아이디(request에서 추출)
     // +유저정보 받아서 예약 생성
-    public ResponseDto createReservation(ReservationRequestDto requestDto, Long roomId, String username){
+    public ResponseDto createReservation(ReservationRequestDto requestDto, Long roomId, User user){
         //room이 유효한지는 컨트롤러에서 검사한 후 서비스로 넘겨주기
         //user도 유효한지는 컨트롤러에서 검사한 후 서비스로 넘겨주기
 
         //username입력받아서 로그인 정보(=예약자정보) 불러오기, roomId 입력받아서 원하는 예약 방 찾기
-        User user=userRepository.findByUsername(username);
+
         Room room=roomRepository.findRoomById(roomId).orElseThrow(()->new NullPointerException("해당 숙소가 존재하지 않습니다"));
         LocalDate checkIn=requestDto.getCheckIn();
         LocalDate checkOut=requestDto.getCheckOut();
@@ -56,14 +56,19 @@ public class ReservationService {
     public boolean checkDate(Long roomId,LocalDate checkIn,LocalDate checkOut){
         List<Reservation> existReservation=reservationRepository.findAllById(roomId);
         for(Reservation reservation:existReservation){
+            reservation.getCheckOut().plusDays(1); //마지막 날짜는 포함 안되므로 1 더해서
+
             if((checkIn.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut()))
-                    ||(checkOut.isAfter(reservation.getCheckIn())&&checkIn.isBefore(reservation.getCheckOut())))
+                    ||(checkOut.isAfter(reservation.getCheckIn())&&checkOut.isBefore(reservation.getCheckOut()))){
                 return false;
+            }
         }
         if(checkIn.isAfter(checkOut))
             return false;
 
         return true;
+
+
     }
 
 
