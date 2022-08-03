@@ -50,9 +50,6 @@ public class Reservation extends TimeStamped{
     private int totalPrice;
 
     @Column(nullable = false)
-    private boolean status = true;
-
-    @Column(nullable = false)
     private boolean isCancel = false;
 
     @Column(nullable = false)
@@ -69,12 +66,5 @@ public class Reservation extends TimeStamped{
         this.room=room;
         this.user=user;
     }
-
-
-
-
-
-
-
 
 }
