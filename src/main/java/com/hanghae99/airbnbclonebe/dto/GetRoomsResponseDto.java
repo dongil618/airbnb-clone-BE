@@ -14,5 +14,5 @@ public class GetRoomsResponseDto {
     private String imgUrl;
     private String location;
     private int price;
-    private boolean isWish;
+    private Boolean isWish;
 }
