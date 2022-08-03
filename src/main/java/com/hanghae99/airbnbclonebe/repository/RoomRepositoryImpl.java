@@ -4,7 +4,6 @@ import com.hanghae99.airbnbclonebe.dto.GetRoomsResponseDto;
 import com.hanghae99.airbnbclonebe.model.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ExpressionUtils;
-import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -16,8 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -59,11 +56,11 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
                                 .then((ComparableExpression<Boolean>) Expressions.asBoolean(false))
                                 .otherwise(Expressions.asBoolean(true)).as("isWish")
                 ))
-                .distinct()
                 .from(room)
                 .leftJoin(wish)
                 .on(room.id.eq(wish.room.id), wish.user.id.eq(userId))
                 .where(getCategory(category))
+                .orderBy(room.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -88,6 +85,7 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
                         room.id.as("roomId"),
                         room.title,
                         room.price,
+                        room.createdAt,
                         room.location,
                         // imgUrl 1개만 가져오기  room.imageList.get(0) 오류남
                         ExpressionUtils.as(
@@ -117,6 +115,7 @@ public class RoomRepositoryImpl implements RoomRepositoryCustom {
                 .where(getCategory(category))
                 .where(room.price.between(minPrice, maxPrice))
                 .where(eqOptionBuilder(parking, kitchen, aircon, wifi, washer, tv))
+                .orderBy(room.createdAt.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();

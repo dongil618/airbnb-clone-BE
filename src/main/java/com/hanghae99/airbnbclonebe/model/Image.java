@@ -24,4 +24,8 @@ public class Image {
     @Column(nullable = false)
     private String imgUrl;
 
+    public Image(Room room, String imgUrl) {
+        this.room = room;
+        this.imgUrl = imgUrl;
+    }
 }

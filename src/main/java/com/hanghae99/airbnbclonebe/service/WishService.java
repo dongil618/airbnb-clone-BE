@@ -1,11 +1,13 @@
 package com.hanghae99.airbnbclonebe.service;
 
+import com.hanghae99.airbnbclonebe.dto.ResponseDto;
 import com.hanghae99.airbnbclonebe.model.Room;
 import com.hanghae99.airbnbclonebe.model.User;
 import com.hanghae99.airbnbclonebe.model.Wish;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import com.hanghae99.airbnbclonebe.repository.WishRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,7 +20,7 @@ public class WishService {
     private final RoomRepository roomRepository;
 
 
-    public void addWish(User user, Long roomId) {
+    public ResponseDto addWish(User user, Long roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow(
                 () -> new IllegalArgumentException("해당 숙소 정보를 찾을 수 없습니다.")
         );
@@ -29,10 +31,12 @@ public class WishService {
         }
 
         wishRepository.save(new Wish(user, room));
+
+        return new ResponseDto(HttpStatus.OK.value(), "wish 등록 성공");
     }
 
     @Transactional
-    public void deleteWish(User user, Long roomId) {
+    public ResponseDto deleteWish(User user, Long roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow(
                 () -> new IllegalArgumentException("해당 숙소 정보를 찾을 수 없습니다.")
         );
@@ -41,5 +45,7 @@ public class WishService {
                 .orElseThrow(() -> new IllegalArgumentException("찾을 수 없는 wish 항목입니다."));
 
         wishRepository.deleteById(wish.getId());
+
+        return new ResponseDto(HttpStatus.OK.value(), "wish 삭제 성공");
     }
 }

@@ -1,6 +1,7 @@
 package com.hanghae99.airbnbclonebe.model;
 
 import com.hanghae99.airbnbclonebe.dto.RoomDetailDto;
+import com.hanghae99.airbnbclonebe.dto.RoomRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -62,4 +63,13 @@ public class Room extends TimeStamped{
 
     }*/
 
+    public Room(RoomRequestDto requestDto, User user) {
+        this.title = requestDto.getTitle();
+        this.user = user;
+        this.maxGuest = requestDto.getMaxGuest();
+        this.price = requestDto.getPrice();
+        this.location = requestDto.getLocation();
+        this.information = requestDto.getInformation();
+        this.category = requestDto.getCategory();
+    }
 }

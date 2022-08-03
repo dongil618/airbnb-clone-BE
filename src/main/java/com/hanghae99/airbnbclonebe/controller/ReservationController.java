@@ -3,13 +3,13 @@ package com.hanghae99.airbnbclonebe.controller;
 import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.ReservationRequestDto;
 import com.hanghae99.airbnbclonebe.dto.ResponseDto;
-import com.hanghae99.airbnbclonebe.dto.ResponseMessageDto;
 import com.hanghae99.airbnbclonebe.model.User;
 import com.hanghae99.airbnbclonebe.repository.ReservationRepository;
 import com.hanghae99.airbnbclonebe.repository.RoomRepository;
 import com.hanghae99.airbnbclonebe.repository.UserRepository;
 import com.hanghae99.airbnbclonebe.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +32,6 @@ public class ReservationController {
         Long roomId=requestDto.getRoomId();
         return reservationService.createReservation(requestDto,roomId,user);}
 
-       return new ResponseDto(false,"로그인이 필요합니다");
+       return new ResponseDto(HttpStatus.BAD_REQUEST.value(),"로그인이 필요합니다");
     }
 }

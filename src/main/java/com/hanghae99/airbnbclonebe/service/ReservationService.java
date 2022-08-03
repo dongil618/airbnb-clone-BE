@@ -43,12 +43,12 @@ public class ReservationService {
         //예약이 가능한 날짜인지 확인
         boolean canReservate=checkDate(roomId,checkIn,checkOut);
         if(canReservate==false)
-            return new ResponseDto(false,"등록실패.");
+            return new ResponseDto(500,"등록실패.");
         else
         {
             Reservation reservation=new Reservation(requestDto,room,user);
             reservationRepository.save(reservation);
-            return new ResponseDto(true,"등록 성공");
+            return new ResponseDto(200,"등록 성공");
         }
 
     }

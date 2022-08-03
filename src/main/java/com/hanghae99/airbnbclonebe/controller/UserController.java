@@ -2,6 +2,7 @@ package com.hanghae99.airbnbclonebe.controller;
 
 import com.hanghae99.airbnbclonebe.auth.auth.UserDetailsImpl;
 import com.hanghae99.airbnbclonebe.dto.ResponseDto;
+import com.hanghae99.airbnbclonebe.dto.RoomRequestDto;
 import com.hanghae99.airbnbclonebe.dto.SignupRequestDto;
 import com.hanghae99.airbnbclonebe.dto.UserInfoDto;
 import com.hanghae99.airbnbclonebe.service.UserService;
@@ -32,5 +33,10 @@ public class UserController {
     @PostMapping("/api/host/register")
     public ResponseDto registerHost(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return userService.registerHost(userDetails);
+    }
+
+    @PostMapping("/api/host/room")
+    public ResponseDto registerRoom(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody RoomRequestDto requestDto){
+        return userService.registerRoom(userDetails, requestDto);
     }
 }
