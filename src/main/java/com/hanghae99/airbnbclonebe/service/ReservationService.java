@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -36,13 +37,13 @@ public class ReservationService {
         //username입력받아서 로그인 정보(=예약자정보) 불러오기, roomId 입력받아서 원하는 예약 방 찾기
 
         Room room=roomRepository.findRoomById(roomId).orElseThrow(()->new NullPointerException("해당 숙소가 존재하지 않습니다"));
-        LocalDate checkIn=requestDto.getCheckIn();
-        LocalDate checkOut=requestDto.getCheckOut();
+        LocalDateTime checkIn=requestDto.getCheckIn();
+        LocalDateTime checkOut=requestDto.getCheckOut();
         System.out.println("체크인: "+requestDto.getCheckIn());
         System.out.println("체크아웃: "+requestDto.getCheckOut());
 
         //예약이 가능한 날짜인지 확인
-        boolean canReservate=checkDate(roomId,checkIn,checkOut);
+        boolean canReservate=checkDate(room,checkIn,checkOut);
         if(canReservate==false)
             return new ResponseDto(HttpStatus.BAD_REQUEST.value(),"등록실패.");
         else
@@ -53,9 +54,14 @@ public class ReservationService {
         }
 
     }
+    
 
-    public boolean checkDate(Long roomId,LocalDate checkIn,LocalDate checkOut){
-        List<Reservation> existReservation=reservationRepository.findAllById(roomId);
+    public boolean checkDate(Room room,LocalDateTime checkIn,LocalDateTime checkOut){
+        List<Reservation> existReservation=reservationRepository.findAllByRoom(room);
+        /*for(Reservation reservation:existReservation){
+            System.out.println("저장된 체크인: "+reservation.getCheckIn()); //문제: 처음것만 저장됨ㅠㅠ
+            System.out.println("저장된 체크아웃: "+reservation.getCheckOut());
+        }*/
         for(Reservation reservation:existReservation){
             reservation.getCheckOut().plusDays(1); //마지막 날짜는 포함 안되므로 1 더해서
 
