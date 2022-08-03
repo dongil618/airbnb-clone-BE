@@ -1,5 +1,6 @@
 package com.hanghae99.airbnbclonebe.model;
 
+import com.hanghae99.airbnbclonebe.dto.RoomDetailDto;
 import com.hanghae99.airbnbclonebe.dto.RoomRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -49,7 +50,18 @@ public class Room extends TimeStamped{
     private List<Image> imageList = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "room")
-    private List<Wish> wishList = new ArrayList<>();
+    private List<Wish> wishList = new ArrayList<>(); //상세페이지에는 필요 없음
+
+    /*public Room(RoomDetailDto reqeustdto,User user){
+        this.price= reqeustdto.getPrice();
+        this.location=reqeustdto.getLocation();
+        this.information= reqeustdto.getInformation();
+        this.category= reqeustdto.getCategory();
+        this.optionList=reqeustdto.getOptionList();
+        this.imageList=reqeustdto.getImageList();
+        this.user=user;
+
+    }*/
 
     public Room(RoomRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
