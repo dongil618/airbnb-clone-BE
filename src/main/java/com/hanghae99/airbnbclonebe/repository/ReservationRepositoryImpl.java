@@ -28,6 +28,7 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom{
         List<GetReservationsResponseDto> returnReservation = queryFactory.select(Projections.fields(
                 GetReservationsResponseDto.class,
                         room.id.as("roomId"),
+                        room.title,
                         reservation.checkIn,
                         reservation.checkOut,
                         reservation.guestNum,
@@ -53,6 +54,7 @@ public class ReservationRepositoryImpl implements ReservationRepositoryCustom{
                 .join(room)
                 .on(reservation.room.id.eq(room.id))
                 .orderBy(reservation.createdAt.desc())
+                .where(reservation.user.id.eq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
